@@ -25,6 +25,10 @@ class Note extends Model
         'id'
     ];
 
+    protected $casts = [
+        'is_published' => "boolean",
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
