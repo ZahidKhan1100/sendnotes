@@ -12,6 +12,7 @@ new #[Layout('layouts.app')] class extends Component {
     {
         $this->authorize('update', $note);
         $this->fill($note);
+        // new changes
     }
 }; ?>
 
