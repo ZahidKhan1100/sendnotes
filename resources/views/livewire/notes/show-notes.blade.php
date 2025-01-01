@@ -52,8 +52,12 @@ new class extends Component {
                 @foreach ($notes as $note)
                     <x-card wire:key='{{ $note->id }}' class="flex flex-col">
                         <div class="flex flex-col gap-y-1">
-                            <a class="font-bold heading hover:underline hover:text-blue-500"
-                                href="{{ route('notes.edit', $note) }}" wire:navigate>{{ $note->title }}</a>
+                            @can('update', $note)
+                                <a class="font-bold heading hover:underline hover:text-blue-500"
+                                    href="{{ route('notes.edit', $note) }}" wire:navigate>{{ $note->title }}</a>
+                            @else
+                                <p class="text-xl font-bold text-gray-500">{{ $note->title }}</p>
+                            @endcan
                             <p>{{ Str::limit($note->body, 30, '...') }}</p>
                         </div>
                         <div class="flex flex-row justify-between mt-10">
@@ -67,7 +71,9 @@ new class extends Component {
                                 </p>
 
                                 <div class="flex flex-row justify-end gap-2">
-                                    <x-mini-button rounded info label="i" href="{{ route('notes.view', ['note' => $note->id]) }}" wire:navigate></x-mini-button>
+                                    <x-mini-button rounded info label="i"
+                                        href="{{ route('notes.view', ['note' => $note->id]) }}"
+                                        wire:navigate></x-mini-button>
 
                                     <x-mini-button rounded icon="trash"
                                         wire:click="delete('{{ $note->id }}')"></x-mini-button>
